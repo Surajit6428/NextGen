@@ -1,15 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
 
+// 🔥 Backend URL (LIVE)
+const API_URL = "https://nextgen-backend-1rk3.onrender.com";
+
 export default function Signup({ setPage, setToast }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 🔥 FIXED (Form Submit)
+  // 🔥 Form Submit
   const handleSubmit = async (e) => {
-    e.preventDefault(); // ⚠️ IMPORTANT (Enter fix)
+    e.preventDefault();
 
     if (!name || !email || !password) {
       setToast("⚠️ All fields are required");
@@ -21,7 +24,7 @@ export default function Signup({ setPage, setToast }) {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:5000/api/auth/signup",
+        `${API_URL}/api/auth/signup`, // ✅ FIXED URL
         { name, email, password }
       );
 
@@ -46,7 +49,6 @@ export default function Signup({ setPage, setToast }) {
 
       <h1 className="logo">⚡ NextGen</h1>
 
-      {/* 🔥 FORM START */}
       <form className="auth-box" onSubmit={handleSubmit}>
         <h2>Signup</h2>
 
@@ -69,7 +71,6 @@ export default function Signup({ setPage, setToast }) {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {/* 🔥 BUTTON FIX */}
         <button type="submit" disabled={loading}>
           {loading ? "Creating..." : "Signup"}
         </button>
